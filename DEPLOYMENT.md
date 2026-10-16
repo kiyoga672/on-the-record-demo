@@ -2,6 +2,16 @@
 
 This is a separate deployment copy of the working demo. Application source and features are retained; Next.js is pinned to the maintained 15.5.28 line because Amplify's managed Next SSR documentation lists versions through 15. The original local Next 16 checkout remains unchanged.
 
+## Verified release status
+
+- Private source repository: https://github.com/kiyoga672/on-the-record-demo , branch main.
+- Next.js 15.5.28 with patched PostCSS 8.5.30 override; npm audit: zero vulnerabilities.
+- Production build verified with Node.js 22; all fifteen frontend tests pass.
+- Local production port 3001: health 200; SSR topic page 200 with OG metadata; OG image 200 image/png.
+- Live recommendation regression passed for Australian Society and the long No Jab No Pay Repeal bill heading, with source-exact verification. Unknown theme remains empty; monthly statistics succeed.
+- Staged source and browser bundles scanned against configured secret values: no matches.
+- Cloud deployment has NOT occurred. AWS console login/account is still required. No Amplify app, hosting role, build job or public URL has yet been created.
+
 ## AWS console setup
 
 1. Connect a private GitHub repository containing this directory at its root. Amplify SSR does not support zip/manual deployment. Use Sydney (ap-southeast-2).
