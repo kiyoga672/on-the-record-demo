@@ -1,0 +1,24 @@
+{
+  "id": "topic_attention",
+  "type": "esql",
+  "description": "Counts and topic share across eligible speakers in one house. Frequency is not a political position. UI must check coverage before scoring.",
+  "configuration": {
+    "query": "FROM hansard | WHERE house == ?house AND date >= TO_DATETIME(?from) | STATS total = COUNT(*), on_topic = COUNT(*) WHERE MATCH(text, ?topic) BY speaker_id, speaker_name | WHERE total >= 5 | EVAL share = TO_DOUBLE(on_topic) / TO_DOUBLE(total) | SORT share DESC | LIMIT 10000",
+    "params": {
+      "house": {
+        "type": "string",
+        "description": "house"
+      },
+      "topic": {
+        "type": "string",
+        "description": "topic"
+      },
+      "from": {
+        "type": "string",
+        "description": "from",
+        "optional": true,
+        "defaultValue": "2025-01-01T00:00:00Z"
+      }
+    }
+  }
+}

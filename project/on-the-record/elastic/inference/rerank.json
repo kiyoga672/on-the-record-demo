@@ -1,0 +1,5 @@
+{
+  "inference_id": ".rerank-v1-elasticsearch",
+  "service": "elasticsearch",
+  "note": "Uses the existing Hosted default; setup checks rather than replaces it."
+}

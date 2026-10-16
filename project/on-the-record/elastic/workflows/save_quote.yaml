@@ -1,0 +1,142 @@
+version: '1'
+name: save_quote
+description: Save an explicitly requested source-exact quote after capability ownership
+  verification. Existing saves are unchanged.
+enabled: true
+triggers:
+- type: manual
+  inputs:
+    type: object
+    properties:
+      document_id:
+        type: string
+      email:
+        type: string
+      speaker_id:
+        type: string
+      speaker_name:
+        type: string
+      party:
+        type: string
+      topic:
+        type: string
+      quote:
+        type: string
+      date:
+        type: string
+      house:
+        type: string
+      url:
+        type: string
+      remind_on:
+        type: string
+      quote_hash:
+        type: string
+      management_hash:
+        type: string
+      speech_id:
+        type: string
+      monthly:
+        type: boolean
+    required:
+    - document_id
+    - email
+    - speaker_id
+    - speaker_name
+    - party
+    - topic
+    - quote
+    - date
+    - house
+    - url
+    - remind_on
+    - quote_hash
+    - management_hash
+    - speech_id
+    - monthly
+    additionalProperties: false
+steps:
+- name: check_owner
+  type: elasticsearch.search
+  with:
+    index: saved_quotes
+    size: 1
+    query:
+      bool:
+        filter:
+        - term:
+            record_kind: ownership
+        - term:
+            email: '{{ inputs.email }}'
+        - term:
+            management_hash: '{{ inputs.management_hash }}'
+- name: verify_source
+  type: elasticsearch.request
+  if: 'steps.check_owner.output.hits.total.value : 1'
+  with:
+    method: POST
+    path: /hansard/_search
+    body:
+      size: 1
+      _source:
+      - speaker_name
+      - party
+      runtime_mappings:
+        source_exact:
+          type: boolean
+          script:
+            source: String q = params.quote; emit(q.length() > 0 && q.trim().splitOnToken('
+              ').length <= 60 && params._source.text.contains(q) && params._source.date.substring(0,10)
+              == params.date.substring(0,10));
+            params:
+              quote: '{{ inputs.quote }}'
+              date: '{{ inputs.date }}'
+      query:
+        bool:
+          filter:
+          - term:
+              speech_id: '{{ inputs.speech_id }}'
+          - term:
+              speaker_id: '{{ inputs.speaker_id }}'
+          - term:
+              url: '{{ inputs.url }}'
+          - term:
+              house: '{{ inputs.house }}'
+          - range:
+              date:
+                gte: '2025-01-01'
+          - term:
+              source_exact: true
+- name: save_verified
+  type: elasticsearch.update
+  foreach: '{{ steps.verify_source.output.hits.hits }}'
+  with:
+    index: saved_quotes
+    id: '{{ inputs.document_id }}'
+    refresh: wait_for
+    script:
+      source: ctx.op = 'noop';
+    upsert:
+      email: '{{ inputs.email }}'
+      speaker_id: '{{ inputs.speaker_id }}'
+      speaker_name: '{{ foreach.item._source.speaker_name }}'
+      party: '{{ foreach.item._source.party }}'
+      topic: '{{ inputs.topic }}'
+      quote: '{{ inputs.quote }}'
+      date: '{{ inputs.date }}'
+      house: '{{ inputs.house }}'
+      url: '{{ inputs.url }}'
+      remind_on: '{{ inputs.remind_on }}'
+      quote_hash: '{{ inputs.quote_hash }}'
+      management_hash: '{{ inputs.management_hash }}'
+      speech_id: '{{ inputs.speech_id }}'
+      monthly: '{{ inputs.monthly }}'
+      record_kind: quote
+      created_at: '{{ execution.startedAt | date: ''%Y-%m-%dT%H:%M:%SZ'' }}'
+      sent_at: null
+      last_sent: null
+- name: confirmation
+  type: console
+  with:
+    message: Save processing completed. Application must confirm document exists before
+      reporting success.

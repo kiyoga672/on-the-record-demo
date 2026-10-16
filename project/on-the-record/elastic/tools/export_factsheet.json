@@ -1,0 +1,9 @@
+{
+  "id": "export_factsheet",
+  "type": "workflow",
+  "description": "Prepare quote candidates for an explicit fact sheet export request. Final source verification is mandatory before delivery.",
+  "configuration": {
+    "workflow_id": "otr-export-factsheet",
+    "wait_for_completion": true
+  }
+}

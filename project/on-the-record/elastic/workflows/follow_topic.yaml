@@ -1,0 +1,42 @@
+version: '1'
+name: follow_topic
+description: 'On the Record: follow_topic'
+enabled: true
+triggers:
+- type: manual
+  inputs:
+  - name: watch_id
+    type: string
+    required: true
+  - name: email
+    type: string
+    required: true
+  - name: speaker_id
+    type: string
+    required: true
+  - name: speaker_name
+    type: string
+    required: true
+  - name: topic
+    type: string
+    required: true
+  - name: created_at
+    type: string
+    required: true
+steps:
+- name: save_watch
+  type: elasticsearch.index
+  with:
+    index: watches
+    id: '{{ inputs.watch_id }}'
+    refresh: wait_for
+    document:
+      email: '{{ inputs.email }}'
+      speaker_id: '{{ inputs.speaker_id }}'
+      speaker_name: '{{ inputs.speaker_name }}'
+      topic: '{{ inputs.topic }}'
+      created_at: '{{ inputs.created_at }}'
+- name: confirmation
+  type: console
+  with:
+    message: Topic watch saved.

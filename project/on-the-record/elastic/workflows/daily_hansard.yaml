@@ -1,0 +1,74 @@
+version: '1'
+name: daily_hansard
+description: Index a source-validated batch supplied by the ingestion worker. Scheduling,
+  watch matching and email are not configured.
+enabled: true
+triggers:
+- type: manual
+  inputs:
+    type: object
+    properties:
+      date:
+        type: string
+      documents:
+        type: array
+        maxItems: 100
+        items:
+          type: object
+          properties:
+            speech_id:
+              type: string
+            speaker_id:
+              type: string
+            speaker_name:
+              type: string
+            date:
+              type: string
+            house:
+              type: string
+            party:
+              type: string
+            electorate:
+              type: string
+            debate_title:
+              type: string
+            text:
+              type: string
+            url:
+              type: string
+          required:
+          - speech_id
+          - speaker_id
+          - speaker_name
+          - date
+          - house
+          - text
+          - url
+          additionalProperties: true
+    required:
+    - date
+    - documents
+    additionalProperties: false
+steps:
+- name: index_speeches
+  type: elasticsearch.index
+  foreach: '{{ inputs.documents }}'
+  with:
+    index: hansard
+    id: '{{ foreach.item.speech_id }}'
+    document:
+      speech_id: '{{ foreach.item.speech_id }}'
+      speaker_id: '{{ foreach.item.speaker_id }}'
+      speaker_name: '{{ foreach.item.speaker_name }}'
+      date: '{{ foreach.item.date }}'
+      house: '{{ foreach.item.house }}'
+      party: '{{ foreach.item.party }}'
+      electorate: '{{ foreach.item.electorate }}'
+      debate_title: '{{ foreach.item.debate_title }}'
+      text: '{{ foreach.item.text }}'
+      url: '{{ foreach.item.url }}'
+      word_count: '{{ foreach.item.word_count }}'
+- name: ingest_complete
+  type: console
+  with:
+    message: 'Provided Hansard source batch indexed. Source date: {{ inputs.date }}'

@@ -1,0 +1,20 @@
+{
+  "id": "speaker_topics",
+  "type": "esql",
+  "description": "List debate titles this person has spoken on, without inferring their views.",
+  "configuration": {
+    "query": "FROM hansard | WHERE speaker_id == ?speaker_id AND date >= TO_DATETIME(?from) | STATS speeches = COUNT(*) BY debate_title.kw | SORT speeches DESC | LIMIT 10",
+    "params": {
+      "speaker_id": {
+        "type": "string",
+        "description": "speaker_id"
+      },
+      "from": {
+        "type": "string",
+        "description": "from",
+        "optional": true,
+        "defaultValue": "2025-01-01T00:00:00Z"
+      }
+    }
+  }
+}

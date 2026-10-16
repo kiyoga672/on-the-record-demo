@@ -1,0 +1,24 @@
+{
+  "id": "verify_quote",
+  "type": "esql",
+  "description": "Locate a phrase candidate by speaker. Returns original text for a mandatory exact substring check; phrase matching alone is NOT proof.",
+  "configuration": {
+    "query": "FROM hansard | WHERE speaker_id == ?speaker_id AND date >= TO_DATETIME(?from) AND MATCH_PHRASE(text, ?quote) | KEEP speech_id, speaker_id, text, date, house, url | LIMIT 10",
+    "params": {
+      "speaker_id": {
+        "type": "string",
+        "description": "speaker_id"
+      },
+      "quote": {
+        "type": "string",
+        "description": "quote"
+      },
+      "from": {
+        "type": "string",
+        "description": "from",
+        "optional": true,
+        "defaultValue": "2025-01-01T00:00:00Z"
+      }
+    }
+  }
+}

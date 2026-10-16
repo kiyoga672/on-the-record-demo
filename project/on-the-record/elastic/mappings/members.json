@@ -1,0 +1,32 @@
+{
+  "mappings": {
+    "properties": {
+      "person_id": {
+        "type": "keyword"
+      },
+      "house": {
+        "type": "keyword"
+      },
+      "party": {
+        "type": "keyword"
+      },
+      "electorate": {
+        "type": "keyword"
+      },
+      "state": {
+        "type": "keyword"
+      },
+      "image_url": {
+        "type": "keyword"
+      },
+      "name": {
+        "type": "keyword",
+        "fields": {
+          "text": {
+            "type": "text"
+          }
+        }
+      }
+    }
+  }
+}

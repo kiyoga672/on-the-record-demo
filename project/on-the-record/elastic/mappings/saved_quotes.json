@@ -1,0 +1,60 @@
+{
+  "mappings": {
+    "properties": {
+      "email": {
+        "type": "keyword"
+      },
+      "speaker_id": {
+        "type": "keyword"
+      },
+      "speaker_name": {
+        "type": "keyword"
+      },
+      "party": {
+        "type": "keyword"
+      },
+      "topic": {
+        "type": "keyword"
+      },
+      "quote_hash": {
+        "type": "keyword"
+      },
+      "house": {
+        "type": "keyword"
+      },
+      "url": {
+        "type": "keyword"
+      },
+      "management_hash": {
+        "type": "keyword"
+      },
+      "speech_id": {
+        "type": "keyword"
+      },
+      "record_kind": {
+        "type": "keyword"
+      },
+      "quote": {
+        "type": "text"
+      },
+      "monthly": {
+        "type": "boolean"
+      },
+      "date": {
+        "type": "date"
+      },
+      "remind_on": {
+        "type": "date"
+      },
+      "created_at": {
+        "type": "date"
+      },
+      "sent_at": {
+        "type": "date"
+      },
+      "last_sent": {
+        "type": "date"
+      }
+    }
+  }
+}

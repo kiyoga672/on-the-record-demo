@@ -1,0 +1,58 @@
+version: '1'
+name: export_factsheet
+description: 'On the Record: export_factsheet'
+enabled: true
+triggers:
+- type: manual
+  inputs:
+  - name: speaker_id
+    type: string
+    required: true
+  - name: speaker_name
+    type: string
+    required: true
+  - name: topic
+    type: string
+    required: true
+  - name: candidates
+    type: string
+    required: true
+steps:
+- name: select_quotes
+  type: ai.agent
+  agent-id: on-the-record
+  inference-id: bedrock-sonnet-4-5-chat
+  with:
+    configuration_overrides:
+      tools: []
+      instructions: Prepare candidate verbatim excerpts from supplied Hansard records
+        only. You do not verify or deliver them; the application MUST call verify_quote
+        and fresh source validation before displaying or downloading any output. Select
+        up to two relevant continuous quotations of at most 60 words. Never paraphrase
+        or infer a position. Do not call tools. Return the requested JSON schema with
+        exact speech_id and quote. Never claim these drafts are verified.
+    message: 'Return candidate items:[{speech_id,quote}] only. Select up to two relevant
+      continuous excerpts from supplied hybrid candidates for speaker_id={{ inputs.speaker_id
+      }} on topic={{ inputs.topic }}. Do not call tools. The app will run verify_quote
+      and exact source checks before any delivery. Candidates: {{ inputs.candidates
+      }}'
+    schema:
+      type: object
+      properties:
+        items:
+          type: array
+          maxItems: 8
+          items:
+            type: object
+            properties:
+              speech_id:
+                type: string
+              quote:
+                type: string
+            required:
+            - speech_id
+            - quote
+            additionalProperties: false
+      required:
+      - items
+      additionalProperties: false

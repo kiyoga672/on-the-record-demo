@@ -1,0 +1,24 @@
+{
+  "id": "topic_timeline",
+  "type": "esql",
+  "description": "Monthly counts of speeches containing a topic by a speaker.",
+  "configuration": {
+    "query": "FROM hansard | WHERE speaker_id == ?speaker_id AND date >= TO_DATETIME(?from) AND MATCH(text, ?topic) | STATS n = COUNT(*) BY month = DATE_TRUNC(1 month, date) | SORT month | LIMIT 1000",
+    "params": {
+      "speaker_id": {
+        "type": "string",
+        "description": "speaker_id"
+      },
+      "topic": {
+        "type": "string",
+        "description": "topic"
+      },
+      "from": {
+        "type": "string",
+        "description": "from",
+        "optional": true,
+        "defaultValue": "2025-01-01T00:00:00Z"
+      }
+    }
+  }
+}

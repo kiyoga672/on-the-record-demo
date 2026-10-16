@@ -1,0 +1,5 @@
+requests>=2.32.3,<3
+python-dotenv>=1.0.1,<2
+beautifulsoup4>=4.12.3,<5
+PyYAML>=6.0.2,<7
+boto3>=1.35,<2

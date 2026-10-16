@@ -1,0 +1,8 @@
+{
+  "id": "search_speeches",
+  "type": "index_search",
+  "description": "Search Hansard ONLY for the specified speaker_id and topic since 2025-01-01. Return speech_id, text, date, house, debate_title, url. Never infer opinions.",
+  "configuration": {
+    "pattern": "hansard"
+  }
+}

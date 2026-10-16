@@ -30,3 +30,13 @@ export function attentionScore(share:number,shares:number[]):number|null {
   const median=sorted.length%2 ? sorted[i] : (sorted[i-1]+sorted[i])/2;
   return median>0 ? Math.min(100,Math.max(0,Math.round(50*share/median))) : null;
 }
+export function attentionSummary(rows:{speaker_id:string;total:number;on_topic:number;share:number}[],speakerId:string,complete:boolean){
+ const own=rows.find(row=>row.speaker_id===speakerId);
+ const eligible=rows.filter(row=>row.total>=5);
+ const score=own&&own.total>=5?attentionScore(own.share,eligible.map(row=>row.share)):null;
+ const reason=!own||own.total<5?'A score requires at least five indexed speeches by this speaker.':
+  eligible.length<2?'A score requires at least two eligible speakers in this chamber.':
+  score===null?'The chamber median topic share is zero, so a relative score cannot be calculated.':
+  complete?'Calculated from the available source collection.':'Provisional comparison using indexed speeches only. Incomplete coverage may change this score.';
+ return {score,total:own?.total??0,on_topic:own?.on_topic??0,eligible_speakers:eligible.length,provisional:!complete,reason};
+}

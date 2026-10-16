@@ -1,0 +1,9 @@
+{
+  "id": "save_quote",
+  "type": "workflow",
+  "description": "Save a source-verified quote only on explicit user request. Requires server-issued document ID, hash and management capability hash; never invent these. The server must confirm storage after execution. No email is sent.",
+  "configuration": {
+    "workflow_id": "otr-save-quote",
+    "wait_for_completion": true
+  }
+}

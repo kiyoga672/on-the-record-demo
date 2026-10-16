@@ -1,0 +1,19 @@
+version: '1'
+name: find_my_mp
+description: 'On the Record: find_my_mp'
+enabled: true
+triggers:
+- type: manual
+  inputs:
+  - name: speaker_id
+    type: string
+    required: true
+steps:
+- name: lookup
+  type: elasticsearch.search
+  with:
+    index: members
+    size: 1
+    query:
+      term:
+        person_id: '{{ inputs.speaker_id }}'

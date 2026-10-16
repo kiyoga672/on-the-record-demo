@@ -1,0 +1,137 @@
+[
+  {
+    "question": "What has Lisa Darmanin said about housing?",
+    "speaker_id": "11021",
+    "speaker_name": "Lisa Darmanin",
+    "topic": "housing",
+    "expected": "answerable",
+    "evidence_speech_id": "senate:2026-10-15.5.1",
+    "scope": "indexed_material"
+  },
+  {
+    "question": "What has Jenny McAllister said about health?",
+    "speaker_id": "10839",
+    "speaker_name": "Jenny McAllister",
+    "topic": "health",
+    "expected": "answerable",
+    "evidence_speech_id": "senate:2026-10-15.12.15",
+    "scope": "indexed_material"
+  },
+  {
+    "question": "What has Maria Kovacic said about energy?",
+    "speaker_id": "11014",
+    "speaker_name": "Maria Kovacic",
+    "topic": "energy",
+    "expected": "answerable",
+    "evidence_speech_id": "senate:2026-10-15.49.4",
+    "scope": "indexed_material"
+  },
+  {
+    "question": "What has Varun Ghosh said about education?",
+    "speaker_id": "11017",
+    "speaker_name": "Varun Ghosh",
+    "topic": "education",
+    "expected": "answerable",
+    "evidence_speech_id": "senate:2026-10-15.180.2",
+    "scope": "indexed_material"
+  },
+  {
+    "question": "What has Penny Ying Yen Wong said about tax?",
+    "speaker_id": "10678",
+    "speaker_name": "Penny Ying Yen Wong",
+    "topic": "tax",
+    "expected": "answerable",
+    "evidence_speech_id": "senate:2026-10-15.96.3",
+    "scope": "indexed_material"
+  },
+  {
+    "question": "What has Michael McCormack said about transport?",
+    "speaker_id": "10743",
+    "speaker_name": "Michael McCormack",
+    "topic": "transport",
+    "expected": "answerable",
+    "evidence_speech_id": "representatives:2026-10-15.130.2",
+    "scope": "indexed_material"
+  },
+  {
+    "question": "What has Milton Dick said about defence?",
+    "speaker_id": "10880",
+    "speaker_name": "Milton Dick",
+    "topic": "defence",
+    "expected": "answerable",
+    "evidence_speech_id": "representatives:2026-10-15.80.4",
+    "scope": "indexed_material"
+  },
+  {
+    "question": "What has Maria Kovacic said about climate?",
+    "speaker_id": "11014",
+    "speaker_name": "Maria Kovacic",
+    "topic": "climate",
+    "expected": "answerable",
+    "evidence_speech_id": "senate:2026-10-15.49.4",
+    "scope": "indexed_material"
+  },
+  {
+    "question": "What has Katy Gallagher said about childcare?",
+    "speaker_id": "10838",
+    "speaker_name": "Katy Gallagher",
+    "topic": "childcare",
+    "expected": "answerable",
+    "evidence_speech_id": "senate:2026-10-15.116.1",
+    "scope": "indexed_material"
+  },
+  {
+    "question": "What has Kate Chaney said about migration?",
+    "speaker_id": "10974",
+    "speaker_name": "Kate Chaney",
+    "topic": "migration",
+    "expected": "answerable",
+    "evidence_speech_id": "representatives:2026-10-15.31.2",
+    "scope": "indexed_material"
+  },
+  {
+    "question": "What has Lisa Darmanin said about quuxlorian teleportatorium?",
+    "speaker_id": "11021",
+    "speaker_name": "Lisa Darmanin",
+    "topic": "quuxlorian teleportatorium",
+    "expected": "unanswerable",
+    "scope": "indexed_material",
+    "global_absence_confirmed": false
+  },
+  {
+    "question": "What has Lisa Darmanin said about zygomorphic unobtainium?",
+    "speaker_id": "11021",
+    "speaker_name": "Lisa Darmanin",
+    "topic": "zygomorphic unobtainium",
+    "expected": "unanswerable",
+    "scope": "indexed_material",
+    "global_absence_confirmed": false
+  },
+  {
+    "question": "What has Lisa Darmanin said about unicorn antimatter pensions?",
+    "speaker_id": "11021",
+    "speaker_name": "Lisa Darmanin",
+    "topic": "unicorn antimatter pensions",
+    "expected": "unanswerable",
+    "scope": "indexed_material",
+    "global_absence_confirmed": false
+  },
+  {
+    "question": "What has Lisa Darmanin said about neptunian submarine gardens?",
+    "speaker_id": "11021",
+    "speaker_name": "Lisa Darmanin",
+    "topic": "neptunian submarine gardens",
+    "expected": "unanswerable",
+    "scope": "indexed_material",
+    "global_absence_confirmed": false
+  },
+  {
+    "question": "What has Lisa Darmanin said about invisible dragon mortgages?",
+    "speaker_id": "11021",
+    "speaker_name": "Lisa Darmanin",
+    "topic": "invisible dragon mortgages",
+    "expected": "unanswerable",
+    "scope": "indexed_material",
+    "global_absence_confirmed": false
+  }
+]

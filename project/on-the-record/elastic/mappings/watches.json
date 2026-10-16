@@ -1,0 +1,24 @@
+{
+  "mappings": {
+    "properties": {
+      "email": {
+        "type": "keyword"
+      },
+      "speaker_name": {
+        "type": "keyword"
+      },
+      "speaker_id": {
+        "type": "keyword"
+      },
+      "topic": {
+        "type": "keyword"
+      },
+      "created_at": {
+        "type": "date"
+      },
+      "last_sent": {
+        "type": "date"
+      }
+    }
+  }
+}

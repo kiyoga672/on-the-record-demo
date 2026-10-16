@@ -1,0 +1,57 @@
+{
+  "mappings": {
+    "properties": {
+      "speech_id": {
+        "type": "keyword"
+      },
+      "house": {
+        "type": "keyword"
+      },
+      "speaker_id": {
+        "type": "keyword"
+      },
+      "party": {
+        "type": "keyword"
+      },
+      "electorate": {
+        "type": "keyword"
+      },
+      "topic_tag": {
+        "type": "keyword"
+      },
+      "url": {
+        "type": "keyword"
+      },
+      "date": {
+        "type": "date"
+      },
+      "speaker_name": {
+        "type": "keyword",
+        "fields": {
+          "text": {
+            "type": "text"
+          }
+        }
+      },
+      "debate_title": {
+        "type": "text",
+        "fields": {
+          "kw": {
+            "type": "keyword"
+          }
+        }
+      },
+      "text": {
+        "type": "text",
+        "copy_to": "semantic_body"
+      },
+      "semantic_body": {
+        "type": "semantic_text",
+        "inference_id": ".elser-2-elasticsearch"
+      },
+      "word_count": {
+        "type": "integer"
+      }
+    }
+  }
+}

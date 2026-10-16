@@ -4,7 +4,7 @@ import path from 'node:path';
 import {z} from 'zod';
 import type {Member,Speech,Timeline} from './types';
 import {ATTRIBUTION} from './types';
-import {verifyCandidate,attentionScore,topicVocabulary,collectVerifiedQuotes} from './verification';
+import {verifyCandidate,attentionSummary,topicVocabulary,collectVerifiedQuotes} from './verification';
 import {topicEvidenceQuery} from './retrievalQuery';
 
 export class AppError extends Error { constructor(message:string,public status=503){super(message);} }
@@ -117,9 +117,7 @@ export async function timeline(input:z.infer<typeof inputSchema>):Promise<Timeli
 export async function attention(id:string,topic:string,house:string){
  const vocabulary=topicVocabulary(topic);const match=`(MATCH(text, ?topic, {"operator":"${vocabulary.operator}"}) OR MATCH_PHRASE(debate_title, ?heading))`;
  const [counts,monthly,cov]=await Promise.all([
- esql(`FROM hansard | WHERE house == ?house AND date >= TO_DATETIME("2025-01-01T00:00:00Z") | STATS total=COUNT(*), on_topic=COUNT(*) WHERE ${match} BY speaker_id | WHERE total >= 5 | EVAL share=TO_DOUBLE(on_topic)/TO_DOUBLE(total) | LIMIT 10000`,{house,topic:vocabulary.query,heading:topic}),
+ esql(`FROM hansard | WHERE house == ?house AND date >= TO_DATETIME("2025-01-01T00:00:00Z") | STATS total=COUNT(*), on_topic=COUNT(*) WHERE ${match} BY speaker_id | EVAL share=TO_DOUBLE(on_topic)/TO_DOUBLE(total) | LIMIT 10000`,{house,topic:vocabulary.query,heading:topic}),
  esql(`FROM hansard | WHERE speaker_id == ?speaker_id AND date >= TO_DATETIME("2025-01-01T00:00:00Z") AND ${match} | STATS n=COUNT(*) BY month=DATE_TRUNC(1 month,date) | SORT month | LIMIT 1000`,{speaker_id:id,topic:vocabulary.query,heading:topic}),coverage()]);
- const own=counts.find((c:any)=>c.speaker_id===id);
- return {score:own&&cov.complete?attentionScore(own.share,counts.map((c:any)=>c.share)):null,total:own?.total??null,on_topic:own?.on_topic??null,eligible_speakers:counts.length,monthly,coverage:cov,
- reason:cov.complete?'A score requires at least five speeches and a nonzero chamber median.':'Chamber comparison is unavailable until index coverage is complete.'};
+ return {...attentionSummary(counts,id,cov.complete),monthly,coverage:cov};
 }

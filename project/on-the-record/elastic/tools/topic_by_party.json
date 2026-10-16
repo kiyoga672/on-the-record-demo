@@ -1,0 +1,24 @@
+{
+  "id": "topic_by_party",
+  "type": "esql",
+  "description": "Counts of topic mentions per party. Not a position or character judgement.",
+  "configuration": {
+    "query": "FROM hansard | WHERE house == ?house AND date >= TO_DATETIME(?from) | STATS total = COUNT(*), on_topic = COUNT(*) WHERE MATCH(text, ?topic) BY party | LIMIT 1000",
+    "params": {
+      "house": {
+        "type": "string",
+        "description": "house"
+      },
+      "topic": {
+        "type": "string",
+        "description": "topic"
+      },
+      "from": {
+        "type": "string",
+        "description": "from",
+        "optional": true,
+        "defaultValue": "2025-01-01T00:00:00Z"
+      }
+    }
+  }
+}

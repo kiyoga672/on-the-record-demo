@@ -1,0 +1,33 @@
+{
+  "mappings": {
+    "properties": {
+      "run_id": {
+        "type": "keyword"
+      },
+      "expected": {
+        "type": "keyword"
+      },
+      "timestamp": {
+        "type": "date"
+      },
+      "question": {
+        "type": "text"
+      },
+      "quotes_total": {
+        "type": "integer"
+      },
+      "quotes_verified": {
+        "type": "integer"
+      },
+      "latency_ms": {
+        "type": "integer"
+      },
+      "refusal_correct": {
+        "type": "boolean"
+      },
+      "judge_grounded": {
+        "type": "boolean"
+      }
+    }
+  }
+}

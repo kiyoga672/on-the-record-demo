@@ -5,3 +5,12 @@ node_modules/
 *.tsbuildinfo
 .local/
 .vercel/
+
+!.env.example
+**/__pycache__/
+**/*.pyc
+**/ingest/raw/
+**/.local/
+**/.venv/
+**/node_modules/
+**/.next/

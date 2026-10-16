@@ -1,0 +1,167 @@
+{
+  "title": "On the Record \u2014 reliability",
+  "description": "Live metrics over eval_runs. Provisional cases cover indexed material only. A null full-coverage refusal metric is intentional. Delivered quote verification is not raw-agent groundedness; unavailable cases count against answerable-case success. Bedrock judge not run.",
+  "panels": [
+    {
+      "type": "vis",
+      "grid": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 9
+      },
+      "config": {
+        "title": "Delivered quotes verified (%)",
+        "type": "metric",
+        "data_source": {
+          "type": "esql",
+          "query": "FROM eval_runs | STATS verified=SUM(quotes_verified), total=SUM(quotes_total) | EVAL value=CASE(total > 0, 100.0 * verified / total, null) | KEEP value"
+        },
+        "metrics": [
+          {
+            "type": "primary",
+            "column": "value"
+          }
+        ]
+      }
+    },
+    {
+      "type": "vis",
+      "grid": {
+        "x": 16,
+        "y": 0,
+        "w": 16,
+        "h": 9
+      },
+      "config": {
+        "title": "Full-coverage refusal accuracy (%) \u2014 null until coverage complete",
+        "type": "metric",
+        "data_source": {
+          "type": "esql",
+          "query": "FROM eval_runs | WHERE expected == \"unanswerable\" | STATS value=AVG(CASE(refusal_correct == true, 100.0, refusal_correct == false, 0.0, null))"
+        },
+        "metrics": [
+          {
+            "type": "primary",
+            "column": "value"
+          }
+        ]
+      }
+    },
+    {
+      "type": "vis",
+      "grid": {
+        "x": 32,
+        "y": 0,
+        "w": 16,
+        "h": 9
+      },
+      "config": {
+        "title": "Median end-to-end latency (ms)",
+        "type": "metric",
+        "data_source": {
+          "type": "esql",
+          "query": "FROM eval_runs | STATS value=PERCENTILE(latency_ms, 50)"
+        },
+        "metrics": [
+          {
+            "type": "primary",
+            "column": "value"
+          }
+        ]
+      }
+    },
+    {
+      "type": "vis",
+      "grid": {
+        "x": 0,
+        "y": 9,
+        "w": 16,
+        "h": 9
+      },
+      "config": {
+        "title": "Answerable cases with verified answers (%)",
+        "type": "metric",
+        "data_source": {
+          "type": "esql",
+          "query": "FROM eval_runs | WHERE expected == \"answerable\" | STATS value=AVG(CASE(answer_correct == true, 100.0, 0.0))"
+        },
+        "metrics": [
+          {
+            "type": "primary",
+            "column": "value"
+          }
+        ]
+      }
+    },
+    {
+      "type": "vis",
+      "grid": {
+        "x": 16,
+        "y": 9,
+        "w": 16,
+        "h": 9
+      },
+      "config": {
+        "title": "Evaluated cases",
+        "type": "metric",
+        "data_source": {
+          "type": "esql",
+          "query": "FROM eval_runs | STATS value=COUNT(*)"
+        },
+        "metrics": [
+          {
+            "type": "primary",
+            "column": "value"
+          }
+        ]
+      }
+    },
+    {
+      "type": "vis",
+      "grid": {
+        "x": 32,
+        "y": 9,
+        "w": 16,
+        "h": 9
+      },
+      "config": {
+        "title": "Delivered quote count (denominator)",
+        "type": "metric",
+        "data_source": {
+          "type": "esql",
+          "query": "FROM eval_runs | STATS value=SUM(quotes_total)"
+        },
+        "metrics": [
+          {
+            "type": "primary",
+            "column": "value"
+          }
+        ]
+      }
+    },
+    {
+      "type": "vis",
+      "grid": {
+        "x": 0,
+        "y": 18,
+        "w": 16,
+        "h": 9
+      },
+      "config": {
+        "title": "Indexed-scope negative controls correct (%)",
+        "type": "metric",
+        "data_source": {
+          "type": "esql",
+          "query": "FROM eval_runs | WHERE expected == \"unanswerable\" | STATS value=AVG(CASE(indexed_scope_refusal_correct == true, 100.0, 0.0))"
+        },
+        "metrics": [
+          {
+            "type": "primary",
+            "column": "value"
+          }
+        ]
+      }
+    }
+  ]
+}

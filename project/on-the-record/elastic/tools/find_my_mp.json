@@ -1,0 +1,9 @@
+{
+  "id": "find_my_mp",
+  "type": "workflow",
+  "description": "Resolve a known person ID to a member record. This deployment has no verified postcode mapping.",
+  "configuration": {
+    "workflow_id": "otr-find-my-mp",
+    "wait_for_completion": true
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "id": "follow_topic",
+  "type": "workflow",
+  "description": "Store a topic watch only after an explicit user request including email. No emails are sent by this action.",
+  "configuration": {
+    "workflow_id": "otr-follow-topic",
+    "wait_for_completion": true
+  }
+}
